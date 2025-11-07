@@ -1,61 +1,41 @@
 import turtle as t
+import colorgram
 import random
 
-def random_color():
-    r = random.randint(0,255)
-    b = random.randint(0,255)
-    g = random.randint(0,255)
-    rgb = (r, g, b)
-    return rgb
+def random_color(color_list):
+    color = random.choice(color_list).rgb
+    return color
 
 t.colormode(255)
 
-timmy = t.Turtle()
-timmy.shape("turtle")
-timmy.color("red")
-
 screen = t.Screen()
-screen.exitonclick()
+screen.screensize(canvheight=400)
+screen.screensize(canvwidth=800)
+screen.title("Hirst Simulator")
+screen.setup(width=1.0, height=1.0)
+ytotal = screen.canvheight
+xtotal = screen.canvwidth
+startx = -(xtotal)
+starty = -(ytotal)
 
-#challenge 1
-for i in range(4):
+image = '018-Hirst_Painting-Python-Intermediate\hirst.jpg'
+number_of_colors = 10
+color_list = colorgram.extract(image, number_of_colors)
+
+timmy = t.Turtle()
+timmy.speed("fast")
+timmy.hideturtle()
+timmy.teleport(startx, starty)
+for j in range (1, int(ytotal/50+2)):
+    for i in range (1, int(xtotal/50+2)):
+        timmy.pendown()
+        timmy.dot(50, random_color(color_list))
+        timmy.penup()
+        timmy.forward(100)
+
+    timmy.backward(2*xtotal+100)
+    timmy.left(90)
     timmy.forward(100)
     timmy.right(90)
 
-#challenge 2
-for i in range (15):
-    timmy.pendown()
-    timmy.forward(10)
-    timmy.penup()
-    timmy.forward(10)
-
-#challenge 3
-sides = 3
-while sides <= 10:
-    angle = 360/sides
-    for i in range (sides):
-        timmy.color(random_color())
-        timmy.forward(100)
-        timmy.right(angle)
-
-
-#challenge 4
-timmy.speed("fastest")
-timmy.widht(3)
-while True:
-    angle = 90*random.randint(0,3)
-    for i in range (sides):
-        timmy.color(random_color())
-        timmy.right(angle)
-        timmy.forward(10)
-        
-
-#challenge 4
-timmy.widht(1)
-steps = 36
-angle = 360 / steps
-for i in range (steps):
-    timmy.color(random_color())
-    timmy.circle(100)
-    timmy.tilt(angle)
-        
+screen.exitonclick()        
